@@ -1,0 +1,2221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduCoCo - Portafolio Estudiantil</title>
+    <style>
+        :root {
+            --primary-color: #0d3757;
+            --secondary-color: #1e3d7b;
+            --accent-color: #f8f9fa;
+            --text-color: #333;
+            --light-gray: #e9ecef;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7f9;
+            color: var(--text-color);
+        }
+        
+        .container {
+            max-width: 1470px;
+            margin: auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-image: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 15px 0;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            width: 70px;
+            height: 75px;
+            background-color: white;
+            border-radius: 50%;
+            padding: 5px;
+            background-image: url('/api/placeholder/70/75');
+            background-size: cover;
+        }
+        
+        .brand-info h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .brand-info p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .page-title {
+            font-size: 32px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: right;
+        }
+        
+        .user-details h2 {
+            font-size: 18px;
+            margin-bottom: 3px;
+        }
+        
+        .user-details p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .badge {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 1px 8px;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+        
+        .avatar {
+            width: 60px;
+            height: 55px;
+            border-radius: 50%;
+            background-image: url('/api/placeholder/60/55');
+            background-size: cover;
+        }
+        
+        /* Dashboard */
+        .dashboard {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: 370px 1fr;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            height: auto;
+            align-items: stretch;
+            justify-content: flex-start;
+        }
+        
+        .progress-section {
+            margin-bottom: 25px;
+        }
+        
+        .progress-section h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: var(--secondary-color);
+        }
+        
+        .progress-container {
+            background-color: var(--light-gray);
+            border-radius: 10px;
+            height: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 75%;
+            border-radius: 10px;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+        
+        .filter-section h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: var(--secondary-color);
+        }
+        
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--light-gray);
+            font-size: 14px;
+        }
+
+        /* Estilos para botones de filtro */
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .filter-buttons button {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .btn-filter-apply {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-filter-clear {
+            background-color: var(--light-gray);
+            color: var(--text-color);
+        }
+
+        .btn-filter-apply:hover {
+            background-color: #0a2d4a;
+        }
+
+        .btn-filter-clear:hover {
+            background-color: #dee2e6;
+        }
+
+        /* Mensaje de resultados */
+        .filter-results {
+            background-color: #e8f4fd;
+            border: 1px solid #bee5eb;
+            border-radius: var(--border-radius);
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #0c5460;
+            display: none;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .stat-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translate 1px;
+        }
+        
+        .stat-card h3 {
+            font-size: 14px;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        /* Portfolio Grid */
+        .portfolio-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .portfolio-header h2 {
+            color: var(--secondary-color);
+            font-size: 22px;
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .view-toggle button {
+            background-color: var(--light-gray);
+            border: none;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .view-toggle button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .assignment-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .assignment-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .assignment-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            position: relative;
+        }
+        
+        .assignment-header h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .assignment-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .assignment-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+        }
+        
+        .assignment-body {
+            padding: 15px;
+        }
+        
+        .assignment-description {
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.4;
+        }
+        
+        .assignment-attachments {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .attachment {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: var(--light-gray);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            height: 70%;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            width: 80%;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #1e9e82;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(38, 184, 153, 0.1);
+        }
+        
+        /* Timeline view */
+        .timeline-container {
+            position: relative;
+            padding: 0 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: var(--primary-color);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-card {
+            margin-right: 60px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-card {
+            margin-left: 60px;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            border: 4px solid white;
+            z-index: 2;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        
+        .timeline-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            width: 45%;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-card::before {
+            right: -30px;
+            border-left-color: var(--white);
+            border-right: none;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-card::before {
+            left: -30px;
+            border-right-color: var(--white);
+            border-left: none;
+        }
+        
+        .timeline-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .timeline-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .timeline-card p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        /* Responsive para timeline */
+        @media (max-width: 768px) {
+            .timeline-container {
+                padding: 0 20px;
+            }
+            
+            .timeline-line {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                justify-content: flex-start !important;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-card,
+            .timeline-item:nth-child(even) .timeline-card {
+                margin-left: 60px;
+                margin-right: 0;
+                width: calc(100% - 80px);
+            }
+            
+            .timeline-dot {
+                left: 30px;
+            }
+            
+            .timeline-card::before {
+                top: 20px !important;
+                left: -30px !important;
+                right: auto !important;
+                border-right-color: var(--white) !important;
+                border-left: none !important;
+            }
+        }
+
+        /* List view */
+        #list-view-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .list-card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .list-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .list-content h4 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1e3d7b;
+            margin-bottom: 5px;
+        }
+
+        .list-content p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.3;
+        }
+
+        .status-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 27px;
+            height: 25px;
+            border-radius: 50%;
+            font-size: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+            background-color: transparent;        
+        }
+        
+        .status-icon:hover {
+            transform: scale(1.15);
+        }
+        
+        .status-complete {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .status-pending {
+            background-color: #ffffff;
+            color: white;
+        }
+        
+        .status-urgent {
+            background-color: white;
+            color: white;
+        }
+        
+        .status-not-started {
+            background-color: white;
+            color: WHITE;
+        }
+        
+        .status-in-revision {
+            background-color: white;
+            color: white;
+        }
+
+        /* Estados de filtrado */
+        .hidden {
+            display: none !important;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .no-results-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .page-title {
+                font-size: 24px;
+                margin: 10px 0;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .centered-card {
+                grid-column: 1 / -1;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="img/images.jpg" alt="LOGO" style="width: 100%; height: 100%; border-radius: 50%;">
+                </div>
+                <div class="brand-info">
+                    <h1>Plataforma Educativa</h1>
+                    <p>Tel: (809) 347-4449</p>
+                    <p>Av. San Vicente de Paul, Esq. Puerto</p>
+                </div>
+            </div>
+            
+            <div class="page-title">PORTAFOLIO</div>
+            
+            <div class="user-info">
+                <div class="user-details">
+                    <h2>Oscar Suero</h2>
+                    <p>6to Grado - A SECUNDARIA</p>
+                    <p>Tareas subidas: <span class="badge">57</span></p>
+                </div>
+                <div class="avatar">
+                    <img src="img/niño.jpg" alt="ESTUDIANTE" style="width: 100%; height: 100%; border-radius: 50%;">
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="dashboard">
+            <div class="sidebar">
+                <div class="progress-section">
+                    <h3>Progreso del Portafolio</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span>57 tareas completadas</span>
+                        <span>75%</span>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <h3>Filtros</h3>
+                    
+                    <div class="filter-results" id="filter-results"></div>
+                    
+                    <div class="filter-group">
+                        <label for="subject">Asignatura</label>
+                        <select id="subject">
+                            <option value="">Todas las asignaturas</option>
+                            <option value="ciencias-sociales">Ciencias Sociales</option>
+                            <option value="matematicas">Matemáticas</option>
+                            <option value="lengua-espanola">Lengua Española</option>
+                            <option value="ciencias-naturales">Ciencias Naturales</option>
+                            <option value="educacion-artistica">Educación Artística</option>
+                            <option value="ingles">Inglés</option>
+                            <option value="fisica">Física</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="date">Periodo</label>
+                        <select id="date">
+                            <option value="">Todo el año</option>
+                            <option value="q1">1er Trimestre</option>
+                            <option value="q2">2do Trimestre</option>
+                            <option value="q3">3er Trimestre</option>
+                            <option value="q4">4to Trimestre</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="status">Estado</label>
+                        <select id="status">
+                            <option value="">Todos los estados</option>
+                            <option value="completado">Completadas</option>
+                            <option value="pendiente">Pendientes</option>
+                            <option value="urgente">Urgentes</option>
+                            <option value="no-iniciado">No iniciadas</option>
+                            <option value="en-revision">En revisión</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="search">Buscar</label>
+                        <input type="text" id="search" placeholder="Título o descripción...">
+                    </div>
+                    
+                    <div class="filter-buttons">
+                        <button class="btn-filter-apply" id="apply-filters">Aplicar</button>
+                        <button class="btn-filter-clear" id="clear-filters">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <h3>Tareas Completadas</h3>
+                        <div class="number" id="stat-completed">57</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Tareas Pendientes</h3>
+                        <div class="number" id="stat-pending">12</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Promedio de Notas</h3>
+                        <div class="number">85%</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Asignaturas Activas</h3>
+                        <div class="number">7</div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-container">
+                    <div class="portfolio-header">
+                        <h2>Mis Trabajos</h2>
+                        <div class="view-toggle">
+                            <button class="active" id="grid-view">Vista de Cuadrícula</button>
+                            <button id="timeline-view">Vista Cronológica</button>
+                            <button id="list-view">Vista de Lista</button>
+                        </div>
+                    </div>
+                    
+                    <div id="grid-view-container">
+                        <div class="portfolio-grid" id="portfolio-grid">
+                            <!-- Tarjeta de tarea 1 -->
+                            <div class="assignment-card" data-subject="ciencias-sociales" data-date="2025-05-18" data-status="completado" data-quarter="q2">
+                                <div class="assignment-header">
+                                    <h3>Mapa Conceptual Historia Dominicana</h3>
+                                    <div class="assignment-meta">
+                                        <span>Ciencias Sociales</span>
+                                        <span>18/05/2025</span>
+                                    </div>
+                                    <div class="assignment-status" style="background-color: #4CAF50;"></div>
+                                </div>
+                                <div class="assignment-body">
+                                    <p class="assignment-description">Crear un mapa conceptual sobre los eventos más importantes de la historia dominicana en el siglo XX.</p>
+                                    <div class="assignment-attachments">
+                                        <div class="attachment">
+                                            <span>📄</span> Mapa_Conceptual.pdf
+                                        </div>
+                                        <div class="attachment">
+                                            <span>🖼️</span> Referencias.jpg
+                                        </div>
+                                    </div>
+                                    <div class="actions">
+                                        <button class="btn btn-primary" onclick="openEditModal('Mapa Conceptual Historia Dominicana', 'ciencias-sociales', 'Crear un mapa conceptual sobre los eventos más importantes de la historia dominicana en el siglo XX.')">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tarjeta de tarea 2 -->
+                            <div class="assignment-card" data-subject="lengua-espanola" data-date="2025-05-14" data-status="urgente" data-quarter="q2">
+                                <div class="assignment-header">
+                                    <h3>Ensayo sobre Literatura Caribeña</h3>
+                                    <div class="assignment-meta">
+                                        <span>Lengua Española</span>
+                                        <span>14/05/2025</span>
+                                    </div>
+                                    <div class="assignment-status" style="background-color: #FF5252;"></div>
+                                </div>
+                                <div class="assignment-body">
+                                    <p class="assignment-description">Ensayo analizando la obra de Juan Bosch y su influencia en la literatura caribeña contemporánea.</p>
+                                    <div class="assignment-attachments">
+                                        <div class="attachment">
+                                            <span>📄</span> Ensayo_Literatura.docx
+                                        </div>
+                                    </div>
+                                    <div class="actions">
+                                        <button class="btn btn-primary" onclick="openEditModal('Ensayo sobre Literatura Caribeña', 'lengua-espanola', 'Ensayo analizando la obra de Juan Bosch y su influencia en la literatura caribeña contemporánea.')">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tarjeta de tarea 3 -->
+                            <div class="assignment-card" data-subject="ciencias-naturales" data-date="2025-05-10" data-status="completado" data-quarter="q2">
+                                <div class="assignment-header">
+                                    <h3>Proyecto de Ciencias: Ecosistemas</h3>
+                                    <div class="assignment-meta">
+                                        <span>Ciencias Naturales</span>
+                                        <span>10/05/2025</span>
+                                    </div>
+                                    <div class="assignment-status" style="background-color: #4CAF50;"></div>
+                                </div>
+                                <div class="assignment-body">
+                                    <p class="assignment-description">Investigación sobre ecosistemas locales y su importancia para la biodiversidad dominicana.</p>
+                                    <div class="assignment-attachments">
+                                        <div class="attachment">
+                                            <span>📄</span> Informe_Ecosistemas.pdf
+                                        </div>
+                                        <div class="attachment">
+                                            <span>🖼️</span> Fotos_Campo.zip
+                                        </div>
+                                    </div>
+                                    <div class="actions">
+                                        <button class="btn btn-primary" onclick="openEditModal('Proyecto de Ciencias: Ecosistemas', 'ciencias-naturales', 'Investigación sobre ecosistemas locales y su importancia para la biodiversidad dominicana.')">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tarjeta de tarea 4 -->
+                            <div class="assignment-card" data-subject="matematicas" data-date="2025-05-05" data-status="pendiente" data-quarter="q2">
+                                <div class="assignment-header">
+                                    <h3>Resolución de Problemas Algebraicos</h3>
+                                    <div class="assignment-meta">
+                                        <span>Matemáticas</span>
+                                        <span>05/05/2025</span>
+                                    </div>
+                                    <div class="assignment-status" style="background-color: #FFC107;"></div>
+                                </div>
+                                <div class="assignment-body">
+                                    <p class="assignment-description">Serie de ejercicios de álgebra aplicados a situaciones de la vida cotidiana.</p>
+                                    <div class="assignment-attachments">
+                                        <div class="attachment">
+                                            <span>📄</span> Ejercicios_Resueltos.pdf
+                                        </div>
+                                    </div>
+                                    <div class="actions">
+                                        <button class="btn btn-primary" onclick="openEditModal('Resolución de Problemas Algebraicos', 'matematicas', 'Serie de ejercicios de álgebra aplicados a situaciones de la vida cotidiana.')">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tarjeta de tarea 5 -->
+                            <div class="assignment-card" data-subject="ciencias-sociales" data-date="2025-04-28" data-status="en-revision" data-quarter="q1">
+                                <div class="assignment-header">
+                                    <h3>Presentación: Culturas Precolombinas</h3>
+                                    <div class="assignment-meta">
+                                        <span>Ciencias Sociales</span>
+                                        <span>28/04/2025</span>
+                                    </div>
+                                    <div class="assignment-status" style="background-color: #2196F3;"></div>
+                                </div>
+                                <div class="assignment-body">
+                                    <p class="assignment-description">Presentación sobre los taínos y otras culturas precolombinas en la isla de La Española.</p>
+                                    <div class="assignment-attachments">
+                                        <div class="attachment">
+                                            <span>📄</span> Presentacion_Tainos.pptx
+                                        </div>
+                                        <div class="attachment">
+                                            <span>📄</span> Guión_Exposición.docx
+                                        </div>
+                                    </div>
+                                    <div class="actions">
+                                        <button class="btn btn-primary" onclick="openEditModal('Presentación: Culturas Precolombinas', 'ciencias-sociales', 'Presentación sobre los taínos y otras culturas precolombinas en la isla de La Española.')">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tarjeta de tarea 6 -->
+                            <div class="assignment-card" data-subject="lengua-espanola" data-date="2025-04-22" data-status="completado" data-quarter="q1">
+                                <div class="assignment-header">
+                                    <h3>Informe de Lectura: El Principito</h3>
+                                    <div class="assignment-meta">
+                                        <span>Lengua Española</span>
+                                        <span>22/04/2025</span>
+                                    </div>
+                                    <div class="assignment-status" style="background-color: #4CAF50;"></div>
+                                </div>
+                                <div class="assignment-body">
+                                    <p class="assignment-description">Análisis literario y reflexión personal sobre El Principito de Antoine de Saint-Exupéry.</p>
+                                    <div class="assignment-attachments">
+                                        <div class="attachment">
+                                            <span>📄</span> Informe_El_Principito.pdf
+                                        </div>
+                                    </div>
+                                    <div class="actions">
+                                        <button class="btn btn-primary" onclick="openEditModal('Informe de Lectura: El Principito', 'lengua-espanola', 'Análisis literario y reflexión personal sobre El Principito de Antoine de Saint-Exupéry.')">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="no-results-grid" class="no-results" style="display: none;">
+                            <div class="no-results-icon">🔍</div>
+                            <h3>No se encontraron resultados</h3>
+                            <p>Intenta ajustar los filtros o cambiar los términos de búsqueda</p>
+                        </div>
+                    </div>
+                    
+                    <div id="timeline-view-container" style="display: none;">
+                        <div class="timeline-container">
+                            <div class="timeline-line"></div>
+                            
+                            <!-- Elemento de cronología 1 -->
+                            <div class="timeline-item" data-subject="ciencias-sociales" data-date="2025-05-18" data-status="completado" data-quarter="q2">
+                                <div class="timeline-dot" style="background-color: #4CAF50;"></div>
+                                <div class="timeline-card">
+                                    <h3>Mapa Conceptual Historia Dominicana</h3>
+                                    <div class="timeline-meta">
+                                        <span>Ciencias Sociales</span>
+                                        <span>18/05/2025</span>
+                                    </div>
+                                    <p>Crear un mapa conceptual sobre los eventos más importantes de la historia dominicana en el siglo XX.</p>
+                                    <div class="actions" style="margin-top: 10px;">
+                                        <button class="btn btn-primary" onclick="openEditModal('Mapa Conceptual Historia Dominicana', 'ciencias-sociales', 'Crear un mapa conceptual sobre los eventos más importantes de la historia dominicana en el siglo XX.')">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item" data-subject="lengua-espanola" data-date="2025-05-14" data-status="urgente" data-quarter="q2">
+                                <div class="timeline-dot" style="background-color: #FF5252;"></div>
+                                <div class="timeline-card">
+                                    <h3>Ensayo sobre Literatura Caribeña</h3>
+                                    <div class="timeline-meta">
+                                        <span>Lengua Española</span>
+                                        <span>14/05/2025</span>
+                                    </div>
+                                    <p>Ensayo analizando la obra de Juan Bosch y su influencia en la literatura caribeña contemporánea.</p>
+                                    <div class="actions" style="margin-top: 10px;">
+                                        <button class="btn btn-primary">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item" data-subject="ciencias-naturales" data-date="2025-05-10" data-status="completado" data-quarter="q2">
+                                <div class="timeline-dot" style="background-color: #4CAF50;"></div>
+                                <div class="timeline-card">
+                                    <h3>Proyecto de Ciencias: Ecosistemas</h3>
+                                    <div class="timeline-meta">
+                                        <span>Ciencias Naturales</span>
+                                        <span>10/05/2025</span>
+                                    </div>
+                                    <p>Investigación sobre ecosistemas locales y su importancia para la biodiversidad dominicana.</p>
+                                    <div class="actions" style="margin-top: 10px;">
+                                        <button class="btn btn-primary">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item" data-subject="matematicas" data-date="2025-05-05" data-status="pendiente" data-quarter="q2">
+                                <div class="timeline-dot" style="background-color: #FFC107;"></div>
+                                <div class="timeline-card">
+                                    <h3>Resolución de Problemas Algebraicos</h3>
+                                    <div class="timeline-meta">
+                                        <span>Matemáticas</span>
+                                        <span>05/05/2025</span>
+                                    </div>
+                                    <p>Serie de ejercicios de álgebra aplicados a situaciones de la vida cotidiana.</p>
+                                    <div class="actions" style="margin-top: 10px;">
+                                        <button class="btn btn-primary">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item" data-subject="ciencias-sociales" data-date="2025-04-28" data-status="en-revision" data-quarter="q1">
+                                <div class="timeline-dot" style="background-color: #2196F3;"></div>
+                                <div class="timeline-card">
+                                    <h3>Presentación: Culturas Precolombinas</h3>
+                                    <div class="timeline-meta">
+                                        <span>Ciencias Sociales</span>
+                                        <span>28/04/2025</span>
+                                    </div>
+                                    <p>Presentación sobre los taínos y otras culturas precolombinas en la isla de La Española.</p>
+                                    <div class="actions" style="margin-top: 10px;">
+                                        <button class="btn btn-primary">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item" data-subject="lengua-espanola" data-date="2025-04-22" data-status="completado" data-quarter="q1">
+                                <div class="timeline-dot" style="background-color: #4CAF50;"></div>
+                                <div class="timeline-card">
+                                    <h3>Informe de Lectura: El Principito</h3>
+                                    <div class="timeline-meta">
+                                        <span>Lengua Española</span>
+                                        <span>22/04/2025</span>
+                                    </div>
+                                    <p>Análisis literario y reflexión personal sobre El Principito de Antoine de Saint-Exupéry.</p>
+                                    <div class="actions" style="margin-top: 10px;">
+                                        <button class="btn btn-primary">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="no-results-timeline" class="no-results" style="display: none;">
+                            <div class="no-results-icon">🔍</div>
+                            <h3>No se encontraron resultados</h3>
+                            <p>Intenta ajustar los filtros o cambiar los términos de búsqueda</p>
+                        </div>
+                    </div>
+
+                    <div id="list-view-container" style="display: none;">
+                        <div class="list-card" data-subject="ciencias-sociales" data-date="2025-05-18" data-status="completado" data-quarter="q2">
+                            <label class="list-item">
+                                <div class="status-icon status-complete">✓</div>
+                                <div class="list-content">
+                                    <h4>Mapa Conceptual Historia Dominicana</h4>
+                                    <p>Ciencias Sociales - 18/05/2025</p>
+                                </div>
+                            </label>
+                        </div>
+                      
+                        <div class="list-card" data-subject="lengua-espanola" data-date="2025-05-14" data-status="urgente" data-quarter="q2">
+                            <label class="list-item">
+                                <div class="status-icon status-urgent">❗</div>
+                                <div class="list-content">
+                                    <h4>Ensayo sobre Literatura Caribeña</h4>
+                                    <p>Lengua Española - 14/05/2025</p>
+                                </div>
+                            </label>
+                        </div>
+                      
+                        <div class="list-card" data-subject="ciencias-naturales" data-date="2025-05-10" data-status="completado" data-quarter="q2">
+                            <label class="list-item completed">
+                                <div class="status-icon status-complete">✓</div>
+                                <div class="list-content">
+                                    <h4>Proyecto de Ciencias: Ecosistemas</h4>
+                                    <p>Ciencias Naturales - 10/05/2025</p>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <div class="list-card" data-subject="matematicas" data-date="2025-05-05" data-status="pendiente" data-quarter="q2">
+                            <label class="list-item">
+                                <div class="status-icon status-pending">⏳</div>
+                                <div class="list-content">
+                                    <h4>Resolución de Problemas Algebraicos</h4>
+                                    <p>Matemáticas - 05/05/2025</p>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <div class="list-card" data-subject="ciencias-sociales" data-date="2025-04-28" data-status="en-revision" data-quarter="q1">
+                            <label class="list-item">
+                                <div class="status-icon status-in-revision">📝</div>
+                                <div class="list-content">
+                                    <h4>Presentación: Culturas Precolombinas</h4>
+                                    <p>Ciencias Sociales - 28/04/2025</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="list-card" data-subject="lengua-espanola" data-date="2025-04-22" data-status="completado" data-quarter="q1">
+                            <label class="list-item">
+                                <div class="status-icon status-complete">✓</div>
+                                <div class="list-content">
+                                    <h4>Informe de Lectura: El Principito</h4>
+                                    <p>Lengua Española - 22/04/2025</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div id="no-results-list" class="no-results" style="display: none;">
+                            <div class="no-results-icon">🔍</div>
+                            <h3>No se encontraron resultados</h3>
+                            <p>Intenta ajustar los filtros o cambiar los términos de búsqueda</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-primary" style="padding: 12px 25px; font-size: 16px; margin-bottom: 15px;" onclick="openModal()">+ Añadir Nueva Tarea</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ==========================================
+        // SISTEMA DE FILTROS FUNCIONAL
+        // ==========================================
+        
+        class PortfolioFilter {
+            constructor() {
+                this.initializeElements();
+                this.attachEventListeners();
+                this.attachViewToggleListeners();
+                this.currentView = 'grid';
+            }
+            
+            initializeElements() {
+                // Elementos de filtro
+                this.subjectFilter = document.getElementById('subject');
+                this.dateFilter = document.getElementById('date');
+                this.statusFilter = document.getElementById('status');
+                this.searchFilter = document.getElementById('search');
+                this.applyBtn = document.getElementById('apply-filters');
+                this.clearBtn = document.getElementById('clear-filters');
+                this.resultsDiv = document.getElementById('filter-results');
+                
+                // Contenedores de vistas
+                this.gridContainer = document.getElementById('grid-view-container');
+                this.timelineContainer = document.getElementById('timeline-view-container');
+                this.listContainer = document.getElementById('list-view-container');
+                
+                // Elementos de las tareas
+                this.gridCards = document.querySelectorAll('.assignment-card');
+                this.timelineItems = document.querySelectorAll('.timeline-item');
+                this.listCards = document.querySelectorAll('#list-view-container .list-card');
+                
+                // Mensajes de sin resultados
+                this.noResultsGrid = document.getElementById('no-results-grid');
+                this.noResultsTimeline = document.getElementById('no-results-timeline');
+                this.noResultsList = document.getElementById('no-results-list');
+                
+                // Estadísticas
+                this.statCompleted = document.getElementById('stat-completed');
+                this.statPending = document.getElementById('stat-pending');
+            }
+            
+            attachEventListeners() {
+                // Botones de filtro
+                this.applyBtn.addEventListener('click', () => this.applyFilters());
+                this.clearBtn.addEventListener('click', () => this.clearFilters());
+                
+                // Filtro en tiempo real para búsqueda
+                this.searchFilter.addEventListener('input', () => this.applyFilters());
+                
+                // Aplicar filtros automáticamente al cambiar selectores
+                this.subjectFilter.addEventListener('change', () => this.applyFilters());
+                this.dateFilter.addEventListener('change', () => this.applyFilters());
+                this.statusFilter.addEventListener('change', () => this.applyFilters());
+            }
+            
+            attachViewToggleListeners() {
+                document.getElementById('grid-view').addEventListener('click', () => this.switchView('grid'));
+                document.getElementById('timeline-view').addEventListener('click', () => this.switchView('timeline'));
+                document.getElementById('list-view').addEventListener('click', () => this.switchView('list'));
+            }
+            
+            switchView(view) {
+                // Actualizar botones activos
+                document.querySelectorAll('.view-toggle button').forEach(btn => btn.classList.remove('active'));
+                document.getElementById(`${view}-view`).classList.add('active');
+                
+                // Mostrar/ocultar contenedores
+                this.gridContainer.style.display = view === 'grid' ? 'block' : 'none';
+                this.timelineContainer.style.display = view === 'timeline' ? 'block' : 'none';
+                this.listContainer.style.display = view === 'list' ? 'block' : 'none';
+                
+                this.currentView = view;
+                
+                // Reaplicar filtros en la nueva vista
+                this.applyFilters();
+            }
+            
+            applyFilters() {
+                const filters = this.getFilterValues();
+                let visibleCount = 0;
+                
+                // Aplicar filtros según la vista actual
+                switch(this.currentView) {
+                    case 'grid':
+                        visibleCount = this.filterGridView(filters);
+                        break;
+                    case 'timeline':
+                        visibleCount = this.filterTimelineView(filters);
+                        break;
+                    case 'list':
+                        visibleCount = this.filterListView(filters);
+                        break;
+                }
+                
+                // Mostrar resultados
+                this.showFilterResults(filters, visibleCount);
+                this.updateStats();
+            }
+            
+            getFilterValues() {
+                return {
+                    subject: this.subjectFilter.value.toLowerCase(),
+                    date: this.dateFilter.value.toLowerCase(),
+                    status: this.statusFilter.value.toLowerCase(),
+                    search: this.searchFilter.value.toLowerCase().trim()
+                };
+            }
+            
+            filterGridView(filters) {
+                let visibleCount = 0;
+                
+                this.gridCards.forEach(card => {
+                    if (this.matchesFilters(card, filters)) {
+                        card.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+                
+                // Mostrar/ocultar mensaje de sin resultados
+                this.noResultsGrid.style.display = visibleCount === 0 ? 'block' : 'none';
+                
+                return visibleCount;
+            }
+            
+            filterTimelineView(filters) {
+                let visibleCount = 0;
+                
+                this.timelineItems.forEach(item => {
+                    if (this.matchesFilters(item, filters)) {
+                        item.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+                
+                // Mostrar/ocultar mensaje de sin resultados
+                this.noResultsTimeline.style.display = visibleCount === 0 ? 'block' : 'none';
+                
+                return visibleCount;
+            }
+            
+            filterListView(filters) {
+                let visibleCount = 0;
+                
+                this.listCards.forEach(card => {
+                    if (this.matchesFilters(card, filters)) {
+                        card.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+                
+                // Mostrar/ocultar mensaje de sin resultados
+                this.noResultsList.style.display = visibleCount === 0 ? 'block' : 'none';
+                
+                return visibleCount;
+            }
+            
+            matchesFilters(element, filters) {
+                // Obtener datos del elemento
+                const elementData = {
+                    subject: element.dataset.subject || '',
+                    date: element.dataset.date || '',
+                    status: element.dataset.status || '',
+                    quarter: element.dataset.quarter || '',
+                    title: this.getElementTitle(element).toLowerCase(),
+                    description: this.getElementDescription(element).toLowerCase()
+                };
+                
+                // Verificar cada filtro
+                if (filters.subject && !elementData.subject.includes(filters.subject)) {
+                    return false;
+                }
+                
+                if (filters.date && elementData.quarter !== filters.date) {
+                    return false;
+                }
+                
+                if (filters.status && elementData.status !== filters.status) {
+                    return false;
+                }
+                
+                if (filters.search) {
+                    const searchText = elementData.title + ' ' + elementData.description;
+                    if (!searchText.includes(filters.search)) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            }
+            
+            getElementTitle(element) {
+                const titleElement = element.querySelector('h3') || element.querySelector('h4');
+                return titleElement ? titleElement.textContent : '';
+            }
+            
+            getElementDescription(element) {
+                const descElement = element.querySelector('.assignment-description') || 
+                                  element.querySelector('p:not(.timeline-meta p)');
+                return descElement ? descElement.textContent : '';
+            }
+            
+            showFilterResults(filters, count) {
+                const hasActiveFilters = filters.subject || filters.date || filters.status || filters.search;
+                
+                if (hasActiveFilters) {
+                    this.resultsDiv.style.display = 'block';
+                    this.resultsDiv.innerHTML = `
+                        <strong>Filtros activos:</strong><br>
+                        ${count} resultado${count !== 1 ? 's' : ''} encontrado${count !== 1 ? 's' : ''}
+                        ${this.getActiveFiltersText(filters)}
+                    `;
+                } else {
+                    this.resultsDiv.style.display = 'none';
+                }
+            }
+            
+            getActiveFiltersText(filters) {
+                const activeFilters = [];
+                
+                if (filters.subject) {
+                    const subjectText = this.subjectFilter.options[this.subjectFilter.selectedIndex].text;
+                    activeFilters.push(`Asignatura: ${subjectText}`);
+                }
+                
+                if (filters.date) {
+                    const dateText = this.dateFilter.options[this.dateFilter.selectedIndex].text;
+                    activeFilters.push(`Período: ${dateText}`);
+                }
+                
+                if (filters.status) {
+                    const statusText = this.statusFilter.options[this.statusFilter.selectedIndex].text;
+                    activeFilters.push(`Estado: ${statusText}`);
+                }
+                
+                if (filters.search) {
+                    activeFilters.push(`Búsqueda: "${filters.search}"`);
+                }
+                
+                return activeFilters.length > 0 ? '<br>' + activeFilters.join('<br>') : '';
+            }
+            
+            clearFilters() {
+                // Limpiar todos los filtros
+                this.subjectFilter.value = '';
+                this.dateFilter.value = '';
+                this.statusFilter.value = '';
+                this.searchFilter.value = '';
+                
+                // Mostrar todas las tareas
+                this.showAllItems();
+                
+                // Ocultar mensaje de resultados
+                this.resultsDiv.style.display = 'none';
+                
+                // Actualizar estadísticas
+                this.updateStats();
+            }
+            
+            showAllItems() {
+                // Mostrar todas las tarjetas en todas las vistas
+                [...this.gridCards, ...this.timelineItems, ...this.listCards].forEach(item => {
+                    item.classList.remove('hidden');
+                });
+                
+                // Ocultar mensajes de sin resultados
+                this.noResultsGrid.style.display = 'none';
+                this.noResultsTimeline.style.display = 'none';
+                this.noResultsList.style.display = 'none';
+            }
+            
+            updateStats() {
+                // Contar tareas visibles por estado
+                const visibleItems = this.getVisibleItems();
+                let completedCount = 0;
+                let pendingCount = 0;
+                
+                visibleItems.forEach(item => {
+                    const status = item.dataset.status;
+                    if (status === 'completado') {
+                        completedCount++;
+                    } else if (status === 'pendiente' || status === 'urgente' || status === 'en-revision' || status === 'no-iniciado') {
+                        pendingCount++;
+                    }
+                });
+                
+                // Actualizar estadísticas en la interfaz
+                if (this.statCompleted) {
+                    this.statCompleted.textContent = completedCount;
+                }
+                if (this.statPending) {
+                    this.statPending.textContent = pendingCount;
+                }
+            }
+            
+            getVisibleItems() {
+                let items = [];
+                switch(this.currentView) {
+                    case 'grid':
+                        items = Array.from(this.gridCards).filter(item => !item.classList.contains('hidden'));
+                        break;
+                    case 'timeline':
+                        items = Array.from(this.timelineItems).filter(item => !item.classList.contains('hidden'));
+                        break;
+                    case 'list':
+                        items = Array.from(this.listCards).filter(item => !item.classList.contains('hidden'));
+                        break;
+                }
+                return items;
+            }
+        }
+        
+        // ==========================================
+        // INICIALIZACIÓN
+        // ==========================================
+        
+        // Inicializar el sistema de filtros cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const portfolioFilter = new PortfolioFilter();
+            
+            // Hacer el objeto disponible globalmente para debugging
+            window.portfolioFilter = portfolioFilter;
+            
+            console.log('Sistema de filtros inicializado correctamente');
+        });
+        
+        // ==========================================
+        // FUNCIONES ADICIONALES EXISTENTES
+        // ==========================================
+        
+        // Funcionalidad del modal para EDITAR (nuevo)
+        function openEditModal(title, subject, description) {
+            const modal = document.getElementById('editModal');
+            modal.style.display = 'flex';
+            
+            // Llenar campos con datos existentes
+            document.getElementById('edit-task-title').value = title;
+            document.getElementById('edit-task-subject').value = subject;
+            document.getElementById('edit-task-description').value = description;
+        }
+        
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+        
+        function saveEditedTask() {
+            const title = document.getElementById('edit-task-title').value.trim();
+            const subject = document.getElementById('edit-task-subject').value.trim();
+            const description = document.getElementById('edit-task-description').value.trim();
+            
+            if (!title || !subject) {
+                alert('Por favor, ingresa el título y selecciona una asignatura.');
+                return;
+            }
+            
+            alert('¡Tarea editada exitosamente!');
+            closeEditModal();
+        }
+        
+        // Funcionalidad del modal para AGREGAR (existente)
+        function openModal(isEdit = false, data = null) {
+            const modal = document.getElementById('uploadModal');
+            modal.style.display = 'flex';
+
+            if (isEdit && data) {
+                document.getElementById('task-title').value = data.title || '';
+                document.getElementById('task-subject').value = data.subject || '';
+                document.getElementById('task-description').value = data.description || '';
+                document.getElementById('task-notes').value = data.notes || '';
+            } else {
+                document.getElementById('task-title').value = '';
+                document.getElementById('task-subject').value = '';
+                document.getElementById('task-description').value = '';
+                document.getElementById('task-notes').value = '';
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('uploadModal').style.display = 'none';
+            
+            // Resetear el formulario
+            document.getElementById('task-title').value = '';
+            document.getElementById('task-subject').value = '';
+            document.getElementById('task-description').value = '';
+            document.getElementById('task-notes').value = '';
+            document.getElementById('file-preview').style.display = 'none';
+            document.getElementById('file-list').innerHTML = '';
+        }
+        
+        // Manejo de archivos
+        document.addEventListener('DOMContentLoaded', () => {
+  const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('file-input');
+const filePreview = document.getElementById('file-preview');
+const fileList = document.getElementById('file-list');
+
+if (dropzone && fileInput) {
+    dropzone.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.style.backgroundColor = 'rgba(38, 184, 153, 0.1)';
+        dropzone.style.borderColor = '#26b899';
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+        dropzone.style.backgroundColor = '';
+        dropzone.style.borderColor = '';
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.style.backgroundColor = '';
+        dropzone.style.borderColor = '';
+        
+        if (e.dataTransfer.files.length > 0) {
+            handleFiles(e.dataTransfer.files);
+        }
+    });
+
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            handleFiles(fileInput.files);
+        }
+    });
+}
+});
+        
+            function handleFiles(files) {
+    if (!filePreview || !fileList) return;
+
+    filePreview.style.display = 'block';
+    fileList.innerHTML = ''; // limpia anteriores
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fileSize = (file.size / 1024 / 1024).toFixed(2); // MB
+
+        const fileItem = document.createElement('div');
+        fileItem.className = 'attachment';
+        fileItem.style.display = 'flex';
+        fileItem.style.justifyContent = 'space-between';
+        fileItem.style.marginBottom = '8px';
+        fileItem.style.padding = '8px 12px';
+        fileItem.style.backgroundColor = '#f5f5f5';
+        fileItem.style.borderRadius = '4px';
+
+        const fileIcon = getFileIcon(file.name);
+
+        fileItem.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span>${fileIcon}</span>
+                <span style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${file.name}</span>
+                <span style="color: #666; font-size: 12px;">(${fileSize} MB)</span>
+            </div>
+            <button type="button" class="remove-file" style="background: none; border: none; color: #ff5252; cursor: pointer;">×</button>
+        `;
+
+        fileList.appendChild(fileItem);
+
+        // botón de eliminar
+        fileItem.querySelector('.remove-file').addEventListener('click', function() {
+            fileItem.remove();
+            if (fileList.children.length === 0) {
+                filePreview.style.display = 'none';
+            }
+        });
+    }
+}
+
+window.handleFiles = handleFiles;
+
+        
+        function getFileIcon(fileName) {
+            const extension = fileName.split('.').pop().toLowerCase();
+            
+            switch (extension) {
+                case 'pdf':
+                    return '📄';
+                case 'doc':
+                case 'docx':
+                    return '📝';
+                case 'jpg':
+                case 'jpeg':
+                case 'png':
+                case 'gif':
+                    return '🖼️';
+                case 'ppt':
+                case 'pptx':
+                    return '📊';
+                case 'xls':
+                case 'xlsx':
+                    return '📈';
+                case 'zip':
+                case 'rar':
+                    return '📦';
+                default:
+                    return '📄';
+            }
+        }
+        
+        // Guardar la tarea
+        function saveTask() {
+            // Obtener valores del formulario
+            const title = document.getElementById('task-title').value.trim();
+            const subject = document.getElementById('task-subject').value.trim();
+            const description = document.getElementById('task-description').value.trim();
+            const notes = document.getElementById('task-notes').value.trim();
+            const archivos = document.getElementById('file-input').files;
+            let attachmentsHTML = '';
+
+            if (!title || !subject) {
+                alert('Por favor, ingresa el título y selecciona una asignatura.');
+                return;
+            }
+
+            for (let i = 0; i < archivos.length; i++) {
+    const nombre = archivos[i].name;
+    const icono = getFileIcon(nombre);
+    attachmentsHTML += `
+        <div class="attachment">
+            <span>${icono}</span> ${nombre}
+        </div>
+    `;
+}
+
+            // Fecha de creación (puedes cambiar el formato según prefieras)
+            const date = new Date().toLocaleDateString('es-DO');
+
+            // Mapear nombres de asignaturas a sus valores de data
+            const subjectMap = {
+                'ciencias-sociales': 'Ciencias Sociales',
+                'matematicas': 'Matemáticas',
+                'lengua-espanola': 'Lengua Española',
+                'ciencias-naturales': 'Ciencias Naturales',
+                'educacion-artistica': 'Educación Artística',
+                'ingles': 'Inglés',
+                'fisica': 'Física'
+            };
+
+            const subjectDisplay = subjectMap[subject] || subject;
+
+            // Determinar trimestre basado en la fecha actual
+            const currentDate = new Date();
+            let quarter = 'q2'; // Por defecto
+            if (currentDate.getMonth() < 3) quarter = 'q1';
+            else if (currentDate.getMonth() < 6) quarter = 'q2';
+            else if (currentDate.getMonth() < 9) quarter = 'q3';
+            else quarter = 'q4';
+
+            // --- Crear plantilla para vista de lista ---
+            const listContainer = document.getElementById('list-view-container');
+            const noResultsList = document.getElementById('no-results-list');
+            const newListCard = document.createElement('div');
+            newListCard.className = 'list-card';
+            newListCard.setAttribute('data-subject', subject);
+            newListCard.setAttribute('data-date', new Date().toISOString().split('T')[0]);
+            newListCard.setAttribute('data-status', 'no-iniciado');
+            newListCard.setAttribute('data-quarter', quarter);
+            
+            newListCard.innerHTML = `
+                <label class="list-item">
+                    <div class="status-icon status-not-started">⭕</div>
+                    <div class="list-content">
+                        <h4>${title}</h4>
+                        <p>${subjectDisplay} - ${date}</p>
+                    </div>
+                </label>
+            `;
+            listContainer.insertBefore(newListCard, noResultsList);
+
+            // --- Crear plantilla para vista de cuadrícula ---
+            const gridContainer = document.querySelector('.portfolio-grid');
+            const newGridCard = document.createElement('div');
+            newGridCard.className = 'assignment-card';
+            newGridCard.setAttribute('data-subject', subject);
+            newGridCard.setAttribute('data-date', new Date().toISOString().split('T')[0]);
+            newGridCard.setAttribute('data-status', 'no-iniciado');
+            newGridCard.setAttribute('data-quarter', quarter);
+            
+            newGridCard.innerHTML = `
+                <div class="assignment-header">
+                    <h3>${title}</h3>
+                    <div class="assignment-meta">
+                        <span>${subjectDisplay}</span>
+                        <span>${date}</span>
+                    </div>
+                    <div class="assignment-status" style="background-color: #E0E0E0;"></div>
+                </div>
+                <div class="assignment-body">
+                    <p class="assignment-description">${description}</p>
+                <div class="assignment-attachments">${attachmentsHTML}</div>
+                    <div class="actions">
+                        <button class="btn btn-primary" onclick="openModal()">Editar</button>
+                    </div>
+                </div>
+            `;
+            gridContainer.appendChild(newGridCard);
+
+            // --- Crear plantilla para vista cronológica (timeline) ---
+            const timelineContainer = document.querySelector('.timeline-container');
+            const timelineLine = timelineContainer.querySelector('.timeline-line');
+            const noResultsTimeline = document.getElementById('no-results-timeline');
+            
+            if (timelineContainer && timelineLine) {
+                const newTimelineItem = document.createElement('div');
+                newTimelineItem.className = 'timeline-item';
+                newTimelineItem.setAttribute('data-subject', subject);
+                newTimelineItem.setAttribute('data-date', new Date().toISOString().split('T')[0]);
+                newTimelineItem.setAttribute('data-status', 'no-iniciado');
+                newTimelineItem.setAttribute('data-quarter', quarter);
+                
+                newTimelineItem.innerHTML = `
+                    <div class="timeline-dot" style="background-color: #E0E0E0;"></div>
+                    <div class="timeline-card">
+                        <h3>${title}</h3>
+                        <div class="timeline-meta">
+                            <span>${subjectDisplay}</span>
+                            <span>${date}</span>
+                        </div>
+                        <p>${description}</p>
+                        <div class="actions" style="margin-top: 10px;">
+                            <button class="btn btn-primary" onclick="openModal()">Editar</button>
+                        </div>
+                    </div>
+                `;
+                // Agregamos el nuevo elemento antes del mensaje de no resultados
+                timelineContainer.insertBefore(newTimelineItem, noResultsTimeline);
+            }
+
+            // Actualizar las referencias de elementos en el filtro
+            if (window.portfolioFilter) {
+                window.portfolioFilter.gridCards = document.querySelectorAll('.assignment-card');
+                window.portfolioFilter.timelineItems = document.querySelectorAll('.timeline-item');
+                window.portfolioFilter.listCards = document.querySelectorAll('#list-view-container .list-card');
+
+                
+                // Reaplicar filtros para incluir la nueva tarea
+                window.portfolioFilter.applyFilters();
+            }
+
+            // Mostrar alerta de éxito y cerrar el modal
+            alert('¡Tu tarea ha sido guardada exitosamente!');
+            closeModal();
+        }
+        
+        // Función para habilitar comentarios en tareas
+        function setupComments() {
+            const cards = document.querySelectorAll('.assignment-card, .timeline-card');
+
+            cards.forEach(card => {
+                const actionsDiv = card.querySelector('.actions');
+
+                if (!actionsDiv) return; // Evita errores si no hay acciones
+
+                // Verificar si ya tiene el botón de comentarios
+                if (actionsDiv.querySelector('.comments-btn')) return;
+
+                const commentsBtn = document.createElement('button');
+                commentsBtn.className = 'btn btn-outline comments-btn';
+                commentsBtn.textContent = 'Comentarios';
+                commentsBtn.style.marginRight = '5px';
+
+                commentsBtn.addEventListener('click', function () {
+                    // ✅ Asegúrate de que solo se agregue si está en vista válida (cuadrícula o cronológica)
+                    if (!card.classList.contains('assignment-card') && !card.classList.contains('timeline-card')) return;
+
+                    let commentsSection = card.querySelector('.comments-section');
+
+                    if (commentsSection) {
+                        commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+                    } else {
+                        commentsSection = document.createElement('div');
+                        commentsSection.className = 'comments-section';
+                        commentsSection.style.marginTop = '15px';
+                        commentsSection.style.borderTop = '1px solid #eee';
+                        commentsSection.style.paddingTop = '10px';
+
+                        const commentsList = document.createElement('div');
+                        commentsList.className = 'comments-list';
+                        commentsList.style.marginBottom = '10px';
+
+                        const exampleComment = document.createElement('div');
+                        exampleComment.style.backgroundColor = '#f9f9f9';
+                        exampleComment.style.padding = '8px';
+                        exampleComment.style.borderRadius = '4px';
+                        exampleComment.style.marginBottom = '8px';
+
+                        exampleComment.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <strong>Profesor García</strong>
+                                <small style="color: #666;">Hace 2 días</small>
+                            </div>
+                            <p style="margin: 0; font-size: 14px;">Buen trabajo Oscar. Considera ampliar la sección de análisis en tu próxima entrega.</p>
+                        `;
+
+                        commentsList.appendChild(exampleComment);
+
+                        const commentForm = document.createElement('div');
+                        commentForm.style.display = 'flex';
+                        commentForm.style.gap = '10px';
+
+                        const textarea = document.createElement('textarea');
+                        textarea.placeholder = 'Escribe un comentario...';
+                        textarea.style.flex = '1';
+                        textarea.style.padding = '8px';
+                        textarea.style.borderRadius = '4px';
+                        textarea.style.border = '1px solid #ddd';
+                        textarea.style.resize = 'vertical';
+                        textarea.style.minHeight = '60px';
+
+                        const sendBtn = document.createElement('button');
+                        sendBtn.className = 'btn btn-primary';
+                        sendBtn.textContent = 'Enviar';
+                        sendBtn.style.alignSelf = 'flex-end';
+
+                        sendBtn.addEventListener('click', function () {
+                            if (textarea.value.trim()) {
+                                const newComment = document.createElement('div');
+                                newComment.style.backgroundColor = '#f9f9f9';
+                                newComment.style.padding = '8px';
+                                newComment.style.borderRadius = '4px';
+                                newComment.style.marginBottom = '8px';
+
+                                newComment.innerHTML = `
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <strong>Oscar Suero</strong>
+                                        <small style="color: #666;">Justo ahora</small>
+                                    </div>
+                                    <p style="margin: 0; font-size: 14px;">${textarea.value}</p>
+                                `;
+
+                                commentsList.appendChild(newComment);
+                                textarea.value = '';
+                            }
+                        });
+
+                        commentForm.appendChild(textarea);
+                        commentForm.appendChild(sendBtn);
+
+                        commentsSection.appendChild(commentsList);
+                        commentsSection.appendChild(commentForm);
+
+                        const bodyElement = card.querySelector('.assignment-body') || card;
+                        bodyElement.appendChild(commentsSection);
+                    }
+                });
+
+                actionsDiv.prepend(commentsBtn);
+            });
+        }
+        
+        // Función para manejar iconos de estado clicables
+        function setupStatusIcons() {
+            const statusIcons = document.querySelectorAll('.status-icon');
+            
+            statusIcons.forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // Verificar si ya existe un menú abierto y cerrarlo
+                    const existingMenu = document.querySelector('.status-menu');
+                    if (existingMenu) {
+                        existingMenu.remove();
+                    }
+                    
+                    // Crear menú de opciones
+                    const menu = document.createElement('div');
+                    menu.className = 'status-menu';
+                    menu.style.position = 'absolute';
+                    menu.style.backgroundColor = 'white';
+                    menu.style.borderRadius = '8px';
+                    menu.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+                    menu.style.padding = '8px';
+                    menu.style.display = 'grid';
+                    menu.style.gridTemplateColumns = 'repeat(3, 1fr)';
+                    menu.style.gap = '8px';
+                    menu.style.marginTop = '5px';
+                    menu.style.left = '0';
+                    menu.style.zIndex = '100';
+                    
+                    // Opciones de estado
+                    const states = [
+                        { icon: '✓', class: 'status-complete', label: 'Completado', status: 'completado', color: '#4CAF50' },
+                        { icon: '⏳', class: 'status-pending', label: 'Pendiente', status: 'pendiente', color: '#FFC107' },
+                        { icon: '❗', class: 'status-urgent', label: 'Urgente', status: 'urgente', color: '#FF5252' },
+                        { icon: '❌', class: 'status-not-started', label: 'No iniciado', status: 'no-iniciado', color: '#E0E0E0' },
+                        { icon: '📝', class: 'status-in-revision', label: 'En revisión', status: 'en-revision', color: '#2196F3' }
+                    ];
+                    
+                    states.forEach(state => {
+                        const option = document.createElement('div');
+                        option.style.display = 'flex';
+                        option.style.flexDirection = 'column';
+                        option.style.alignItems = 'center';
+                        option.style.padding = '8px';
+                        option.style.borderRadius = '6px';
+                        option.style.cursor = 'pointer';
+                        option.style.transition = 'background-color 0.2s';
+                        
+                        option.addEventListener('mouseenter', () => {
+                            option.style.backgroundColor = '#f5f5f5';
+                        });
+                        
+                        option.addEventListener('mouseleave', () => {
+                            option.style.backgroundColor = '';
+                        });
+                        
+                        const stateIcon = document.createElement('div');
+                        stateIcon.className = `status-icon ${state.class}`;
+                        stateIcon.textContent = state.icon;
+                        
+                        const label = document.createElement('span');
+                        label.textContent = state.label;
+                        label.style.fontSize = '12px';
+                        label.style.textAlign = 'center';
+                        label.style.marginTop = '4px';
+                        
+                        option.appendChild(stateIcon);
+                        option.appendChild(label);
+                        
+                        option.addEventListener('click', function() {
+                            // Cambiar el icono actual
+                            icon.className = `status-icon ${state.class}`;
+                            icon.textContent = state.icon;
+                            
+                            // Actualizar el estado en el elemento padre
+                            const parentCard = icon.closest('.list-card, .assignment-card, .timeline-item');
+                            if (parentCard) {
+                                parentCard.setAttribute('data-status', state.status);
+                                
+                                // Actualizar el dot de estado en vista de cuadrícula
+                                const statusDot = parentCard.querySelector('.assignment-status');
+                                if (statusDot) {
+                                    statusDot.style.backgroundColor = state.color;
+                                }
+                                
+                                // Actualizar el dot de timeline
+                                const timelineDot = parentCard.querySelector('.timeline-dot');
+                                if (timelineDot) {
+                                    timelineDot.style.backgroundColor = state.color;
+                                }
+                                
+                                // Si es completado, agregar la clase completed al elemento padre
+                                const listItem = icon.closest('.list-item');
+                                if (listItem) {
+                                    if (state.status === 'completado') {
+                                        listItem.classList.add('completed');
+                                    } else {
+                                        listItem.classList.remove('completed');
+                                    }
+                                }
+                            }
+                            
+                            // Reaplicar filtros si están activos
+                            if (window.portfolioFilter) {
+                                window.portfolioFilter.applyFilters();
+                            }
+                            
+                            // Cerrar el menú
+                            menu.remove();
+                        });
+                        
+                        menu.appendChild(option);
+                    });
+                    
+                    // Posicionar el menú
+                    const rect = icon.getBoundingClientRect();
+                    menu.style.top = rect.bottom + window.scrollY + 'px';
+                    menu.style.left = rect.left + window.scrollX + 'px';
+                    
+                    // Agregar el menú al documento
+                    document.body.appendChild(menu);
+                    
+                    // Cerrar el menú al hacer clic en cualquier otro lugar
+                    function closeMenu(event) {
+                        if (!menu.contains(event.target)) {
+                            menu.remove();
+                            document.removeEventListener('click', closeMenu);
+                        }
+                    }
+                    
+                    setTimeout(() => {
+                        document.addEventListener('click', closeMenu);
+                    }, 0);
+                });
+            });
+        }
+        
+        // Hacer las funciones globales para que puedan ser llamadas desde onclick
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        window.saveTask = saveTask;
+        window.openEditModal = openEditModal;
+        window.closeEditModal = closeEditModal;
+        window.saveEditedTask = saveEditedTask;
+        
+        // Inicialización cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar comentarios y iconos de estado
+            setupComments();
+            setupStatusIcons();
+            
+            console.log('Todas las funcionalidades han sido inicializadas');
+        });
+        
+    </script>
+    
+    <!-- Modal para EDITAR tareas (nuevo) -->
+    <div class="modal-bg" id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000; justify-content: center; align-items: center; padding: 20px;">
+        <div class="modal" style="background-color: white; border-radius: 8px; width: 500px; max-width: 90%; overflow: hidden; overflow-y: auto; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); max-height: 100%;">
+            <div class="modal-header" style="background-color: #2196F3; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-size: 20px;">Editar Tarea</h3>
+                <button class="close-btn" onclick="closeEditModal()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer;">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 20px;">
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="edit-task-title" style="display: block; margin-bottom: 8px; font-weight: 500;">Título de la Tarea</label>
+                    <input type="text" id="edit-task-title" placeholder="Ej: Ensayo sobre Historia Dominicana" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #e9ecef;">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="edit-task-subject" style="display: block; margin-bottom: 8px; font-weight: 500;">Asignatura</label>
+                    <select id="edit-task-subject" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #e9ecef;">
+                        <option value="ciencias-sociales">Ciencias Sociales</option>
+                        <option value="matematicas">Matemáticas</option>
+                        <option value="lengua-espanola">Lengua Española</option>
+                        <option value="ciencias-naturales">Ciencias Naturales</option>
+                        <option value="educacion-artistica">Educación Artística</option>
+                        <option value="ingles">Inglés</option>
+                        <option value="fisica">Física</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="edit-task-description" style="display: block; margin-bottom: 8px; font-weight: 500;">Descripción</label>
+                    <textarea id="edit-task-description" placeholder="Describe brevemente de qué trata esta tarea..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #e9ecef; resize: vertical; min-height: 100px;"></textarea>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500;">Archivos Actuales</label>
+                    <div style="background-color: #f8f9fa; border-radius: 8px; padding: 15px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                            <span>📄</span>
+                            <span style="font-size: 14px;">Archivo_Tarea.pdf</span>
+                            <button style="background: none; border: none; color: #ff5252; cursor: pointer; margin-left: auto;">🗑️</button>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span>🖼️</span>
+                            <span style="font-size: 14px;">Imagen_Referencia.jpg</span>
+                            <button style="background: none; border: none; color: #ff5252; cursor: pointer; margin-left: auto;">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500;">Estado de la Tarea</label>
+                    <select style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #e9ecef;">
+                        <option value="completado">✅ Completado</option>
+                        <option value="pendiente">⏳ Pendiente</option>
+                        <option value="urgente">❗ Urgente</option>
+                        <option value="no-iniciado">❌ No iniciado</option>
+                        <option value="en-revision">📝 En revisión</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500;">Calificación</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="number" placeholder="85" min="0" max="100" style="width: 80px; padding: 8px; border-radius: 8px; border: 1px solid #e9ecef;">
+                        <span style="font-size: 14px; color: #666;">/ 100 puntos</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 15px 20px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e9ecef;">
+                <button class="btn btn-outline" onclick="closeEditModal()" style="background-color: transparent; border: 1px solid #2196F3; color: #2196F3; padding: 8px 15px; border-radius: 8px; cursor: pointer;">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveEditedTask()" style="background-color: #2196F3; color: white; padding: 8px 15px; border: none; border-radius: 8px; cursor: pointer;">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para subir/editar tareas -->
+    <div class="modal-bg" id="uploadModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000; justify-content: center; align-items: center; padding: 20px;">
+        <div class="modal" style="background-color: white; border-radius: 8px; width: 500px; max-width: 90%; overflow: hidden; overflow-y: auto; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); max-height: 100%;">
+            <div class="modal-header" style="background-color: var(--primary-color); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-size: 20px;">Subir Nueva Tarea</h3>
+                <button class="close-btn" onclick="closeModal()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer;">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 20px;">
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="task-title" style="display: block; margin-bottom: 8px; font-weight: 500;">Título de la Tarea</label>
+                    <input type="text" id="task-title" placeholder="Ej: Ensayo sobre Historia Dominicana" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #e9ecef;">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="task-subject" style="display: block; margin-bottom: 8px; font-weight: 500;">Asignatura</label>
+                    <select id="task-subject" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #e9ecef;">
+                        <option value="">Seleccionar asignatura</option>
+                        <option value="ciencias-sociales">Ciencias Sociales</option>
+                        <option value="matematicas">Matemáticas</option>
+                        <option value="lengua-espanola">Lengua Española</option>
+                        <option value="ciencias-naturales">Ciencias Naturales</option>
+                        <option value="educacion-artistica">Educación Artística</option>
+                        <option value="ingles">Inglés</option>
+                        <option value="fisica">Física</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="task-description" style="display: block; margin-bottom: 8px; font-weight: 500;">Descripción</label>
+                    <textarea id="task-description" placeholder="Describe brevemente de qué trata esta tarea..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #e9ecef; resize: vertical; min-height: 100px;"></textarea>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500;">Archivos Adjuntos</label>
+                    <div class="file-upload" id="dropzone" style="border: 2px dashed #e9ecef; padding: 20px; text-align: center; border-radius: 8px; cursor: pointer; margin-bottom: 20px; position: relative;">
+    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#aaaaaa" stroke-width="2">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="17 8 12 3 7 8"></polyline>
+        <line x1="12" y1="3" x2="12" y2="15"></line>
+    </svg>
+    <p style="margin-top: 10px; font-size: 14px; color: #666;">Arrastra archivos aquí o <span style="color: #26b899; text-decoration: underline;">haz clic para seleccionar</span></p>
+    <p style="font-size: 12px; color: #666;">Formatos aceptados: PDF, DOC, DOCX, JPG, PNG, PPT, PPTX (Máx. 10MB)</p>
+    <input type="file" id="file-input" multiple style="display: none;">
+</div>
+                
+                <div id="file-preview" style="display: none;">
+                    <h4 style="margin-bottom: 10px;">Archivos Seleccionados:</h4>
+                    <div id="file-list" style="margin-bottom: 15px;"></div>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="task-notes" style="display: block; margin-bottom: 8px; font-weight: 500;">Notas Adicionales para el Profesor</label>
+                    <textarea id="task-notes" placeholder="Cualquier comentario o aclaración sobre tu trabajo..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #e9ecef; resize: vertical; min-height: 100px;"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 15px 20px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e9ecef;">
+                <button class="btn btn-outline" onclick="closeModal()" style="background-color: transparent; border: 1px solid var(--primary-color); color: var(--primary-color); padding: 8px 15px; border-radius: 8px; cursor: pointer;">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveTask()" style="background-color: var(--primary-color); color: white; padding: 8px 15px; border: none; border-radius: 8px; cursor: pointer;">Guardar Tarea</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+</body>
+</html>
