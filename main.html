@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página con Anclas</title>
+    <style>
+        :root {
+            --main-color: #3498db;
+            --background-color: #f4f6f9;
+            --text-color: #2c3e50;
+            --link-color: #2980b9;
+            --hover-color: #1abc9c;
+            --footer-color: #bdc3c7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: var(--main-color);
+        }
+
+        .links {
+            display: flex;
+            gap: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--link-color);
+            font-size: 18px;
+            padding: 10px 20px;
+            border: 2px solid var(--link-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            background-color: var(--hover-color);
+            color: white;
+            border-color: var(--hover-color);
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <h1>MODULOS</h1>
+    <div class="links">
+        <a href="Listado de docentes/Listado de docentes.html" target="_blank">Listado de docentes</a>
+        <a href="Modulo Estudiantes/index.html" target="_blank">Listado de Estudiantes</a>
+    </div>
+    <footer>
+        &copy; 2025 Pasante Robinson Molaire, para el Grupo Media Soft. Todos los derechos reservados.
+    </footer>
+</body>
+</html>
