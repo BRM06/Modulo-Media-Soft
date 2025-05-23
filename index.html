@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Acompañamiento</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary-blue: #2c5aa0;
+            --secondary-blue: #4a90c2;
+            --light-blue: #e8f4fd;
+            --green-success: #5cb85c;
+            --orange-warning: #f0ad4e;
+            --red-danger: #d9534f;
+            --gray-light: #f8f9fa;
+            --gray-medium: #e9ecef;
+            --gray-dark: #495057;
+            --border-color: #dee2e6;
+            --text-dark: #212529;
+            --text-muted: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .header-brand img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-nav-item {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-nav-item:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .header-nav-item.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .header-stats {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-badge {
+            background-color: var(--green-success);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .form-select-custom {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 14px;
+            background-color: white;
+            min-width: 150px;
+        }
+
+        .form-select-custom:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.25);
+            outline: none;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            background-color: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0;
+            overflow-x: auto;
+        }
+
+        .nav-tabs-custom {
+            border: none;
+            display: flex;
+            flex-wrap: nowrap;
+            min-width: max-content;
+        }
+
+        .nav-tab-item {
+            padding: 12px 20px;
+            border: none;
+            background: none;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-tab-item:hover {
+            color: var(--primary-blue);
+            background-color: var(--light-blue);
+        }
+
+        .nav-tab-item.active {
+            color: var(--primary-blue);
+            border-bottom-color: var(--primary-blue);
+            background-color: var(--light-blue);
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 30px 0;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+       .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+        .btn-custom {
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary-custom {
+            background-color: var(--green-success);
+            border-color: var(--green-success);
+            color: white;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #4cae4c;
+            border-color: #4cae4c;
+            color: white;
+        }
+
+        .btn-secondary-custom {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-secondary-custom:hover {
+            background-color: #1a4480;
+            border-color: #1a4480;
+            color: white;
+        }
+
+        .btn-outline-custom {
+            background-color: white;
+            border-color: var(--border-color);
+            color: var(--text-dark);
+        }
+
+        .btn-outline-custom:hover {
+            background-color: var(--gray-light);
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        /* Search and Filters */
+        .search-filters {
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .search-input {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .search-input input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            background-color: var(--gray-light);
+        }
+
+        .search-input input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.25);
+            background-color: white;
+        }
+
+        .search-input i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            background-color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+            background-color: var(--light-blue);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: white;
+        }
+
+        /* Statistics Panel */
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .stat-completados .stat-number { color: var(--green-success); }
+        .stat-pendientes .stat-number { color: var(--orange-warning); }
+        .stat-total .stat-number { color: var(--primary-blue); }
+        .stat-recreativas .stat-number { color: var(--secondary-blue); }
+
+        /* Cards Container */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            padding: 15px;
+            position: relative;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--gray-light);
+        }
+
+        .card-header h3 {
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            padding-right: 40px;
+        }
+
+        .card-status {
+            position: absolute;
+            top: 15px;
+            right: 40px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-completado {
+            background-color: rgba(92, 184, 92, 0.1);
+            color: var(--green-success);
+        }
+
+        .status-pendiente {
+            background-color: rgba(240, 173, 78, 0.1);
+            color: var(--orange-warning);
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 5px;
+            flex-wrap: wrap;
+        }
+
+        .card-meta-item {
+            background-color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .card-section {
+            margin-bottom: 15px;
+        }
+
+        .card-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .card-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            display: block;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .card-section-profesor {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--primary-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .card-footer {
+            padding: 15px;
+            background-color: var(--gray-light);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 13px;
+            border-radius: 4px;
+            border: 1px solid;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .btn-outline-primary {
+            background-color: white;
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-outline-secondary {
+            background-color: white;
+            border-color: var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--gray-medium);
+            border-color: var(--text-muted);
+            color: var(--text-dark);
+        }
+
+        /* Dropdown */
+        .dropdown-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .dropdown-toggle-custom {
+            background: none;
+            border: none;
+            padding: 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .dropdown-toggle-custom:hover {
+            background-color: var(--gray-medium);
+            color: var(--text-dark);
+        }
+
+        .dropdown-menu-custom {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            min-width: 150px;
+            z-index: 1000;
+            display: none;
+            overflow: hidden;
+        }
+
+        .dropdown-actions.show .dropdown-menu-custom {
+            display: block;
+        }
+
+        .dropdown-item-custom {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 14px;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .dropdown-item-custom:hover {
+            background-color: var(--gray-light);
+            color: var(--text-dark);
+        }
+
+        .dropdown-item-custom.text-danger {
+            color: var(--red-danger) !important;
+        }
+
+        .dropdown-item-custom.text-danger:hover {
+            background-color: rgba(217, 83, 79, 0.1);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1050;
+            padding: 20px;
+        }
+
+        .modal-container {
+            background-color: white;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: modalShow 0.3s ease;
+        }
+
+        @keyframes modalShow {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--gray-light);
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .modal-close:hover {
+            background-color: var(--gray-medium);
+            color: var(--text-dark);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .modal-footer {
+            padding: 20px 25px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            background-color: var(--gray-light);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .form-control-custom {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-control-custom:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.25);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1100;
+            max-width: 350px;
+        }
+
+        .toast-notification {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            font-size: 12px;
+        }
+
+        .toast-success {
+            border-left-color: var(--green-success);
+        }
+
+        .toast-success .toast-icon {
+            background-color: var(--green-success);
+        }
+
+        .toast-error {
+            border-left-color: var(--red-danger);
+        }
+
+        .toast-error .toast-icon {
+            background-color: var(--red-danger);
+        }
+
+        .toast-warning {
+            border-left-color: var(--orange-warning);
+        }
+
+        .toast-warning .toast-icon {
+            background-color: var(--orange-warning);
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+            font-size: 14px;
+        }
+
+        .toast-message {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: var(--gray-medium);
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        /* Confirm Dialog */
+        .confirm-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1100;
+        }
+
+        .confirm-container {
+            background-color: white;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            text-align: center;
+            animation: modalShow 0.3s ease;
+        }
+
+        .confirm-icon {
+            font-size: 48px;
+            color: var(--orange-warning);
+            margin-bottom: 15px;
+        }
+
+        .confirm-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .confirm-message {
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+
+        .confirm-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-danger {
+            background-color: var(--red-danger);
+            border-color: var(--red-danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c9302c;
+            border-color: #c9302c;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-nav {
+                display: none;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-content: flex-end;
+            }
+            
+            .filter-buttons {
+                justify-content: center;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-footer {
+                flex-direction: column;
+            }
+
+            .stats-panel {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        /* Accessibility */
+        .visually-hidden {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container-fluid">
+            <div class="page-title">
+                <i class="fas fa-clipboard-list"></i>
+                REGISTRO DE ACOMPAÑAMIENTO
+            </div>
+
+            <!-- Statistics Panel -->
+            <div class="stats-panel">
+                <div class="stat-card stat-total">
+                    <div class="stat-number" id="statTotal">3</div>
+                    <div class="stat-label">Total Registros</div>
+                </div>
+                <div class="stat-card stat-completados">
+                    <div class="stat-number" id="statCompletados">2</div>
+                    <div class="stat-label">Completados</div>
+                </div>
+                <div class="stat-card stat-pendientes">
+                    <div class="stat-number" id="statPendientes">1</div>
+                    <div class="stat-label">Pendientes</div>
+                </div>
+                <div class="stat-card stat-recreativas">
+                    <div class="stat-number" id="statRecreativas">1</div>
+                    <div class="stat-label">Actividades Recreativas</div>
+                </div>
+            </div>
+
+            <div class="search-filters">
+                <div class="search-input">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar por nombre, cargo, profesor o propósito..." aria-label="Buscar">
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="fas fa-th-large"></i> Todos
+                    </button>
+                    <button class="filter-btn" data-filter="completado">
+                        <i class="fas fa-check-circle"></i> Completados
+                    </button>
+                    <button class="filter-btn" data-filter="pendiente">
+                        <i class="fas fa-clock"></i> Pendientes
+                    </button>
+                    <button class="filter-btn" data-filter="recreativa">
+                        <i class="fas fa-running"></i> Act. Recreativas
+                    </button>
+                </div>
+            </div>
+
+                <div class="action-buttons">
+                <button id="btnNuevoRegistro" class="btn-custom btn-primary-custom">
+                    <i class="fas fa-plus"></i> Nuevo Registro de Acompañamiento
+                </button>
+                <button id="btnExportar" class="btn-custom btn-secondary-custom">
+                    <i class="fas fa-file-export"></i> Exportar
+                </button>
+                <button id="btnImprimir" class="btn-custom btn-outline-custom">
+                    <img src="data:image/png;base64,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" alt="Imprimir" style="width: 25px; height: 20px;"> Imprimir
+                </button>
+            </div>
+
+            <div id="cardContainer" class="card-container">
+                <!-- Las tarjetas se generarán dinámicamente aquí -->
+            </div>
+
+            <div id="emptyState" class="empty-state">
+                <i class="fas fa-clipboard-list"></i>
+                <h3>No hay registros disponibles</h3>
+                <p>No se encontraron registros que coincidan con tu búsqueda o filtros.</p>
+                <button id="btnEmptyAdd" class="btn-custom btn-primary-custom">
+                    <i class="fas fa-plus"></i> Agregar nuevo registro
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Registro -->
+    <div id="modalRegistro" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalTitle" class="modal-title">
+                    <i class="fas fa-clipboard-list"></i> Nuevo Registro de Acompañamiento
+                </h3>
+                <button class="modal-close" id="btnCloseModal" aria-label="Cerrar modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formRegistro">
+                    <input type="hidden" id="registroId" value="">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" id="fecha" class="form-control-custom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="estado" class="form-label">Estado</label>
+                            <select id="estado" class="form-control-custom" required>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="completado">Completado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nombre" class="form-label">Nombre y Apellido del Acompañante</label>
+                        <input type="text" id="nombre" class="form-control-custom" placeholder="Ej: Juan Pérez García" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cargo" class="form-label">Cargo</label>
+                        <input type="text" id="cargo" class="form-control-custom" placeholder="Ej: Docente, Coordinador, Asesor..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profesor" class="form-label">Profesor a acompañar</label>
+                        <input type="text" id="profesor" class="form-control-custom" placeholder="Ej: María Rodríguez" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="proposito" class="form-label">Propósito del acompañamiento</label>
+                        <textarea id="proposito" class="form-control-custom" rows="3" placeholder="Describa el propósito de la visita o acompañamiento..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="acuerdo" class="form-label">Acuerdos establecidos</label>
+                        <textarea id="acuerdo" class="form-control-custom" rows="3" placeholder="Detalle los acuerdos establecidos durante la visita..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-custom btn-outline-custom" id="btnCancelar">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button id="btnGuardar" class="btn-custom btn-primary-custom">
+                    <i class="fas fa-save"></i> Guardar Registro
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalles -->
+    <div id="detallesModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title"><i class="fas fa-info-circle"></i> Detalles del Registro</h2>
+                <button class="modal-close" id="btnCloseDetalles">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="detallesContent">
+                    <!-- El contenido se generará dinámicamente -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnCerrarDetalles" class="btn-custom btn-outline-custom">Cerrar</button>
+                <button id="btnEditarDetalles" class="btn-custom btn-primary-custom">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Dialog -->
+    <div id="confirmDialog" class="confirm-dialog">
+        <div class="confirm-container">
+            <i class="fas fa-exclamation-triangle confirm-icon"></i>
+            <h3 class="confirm-title">¿Estás seguro?</h3>
+            <p class="confirm-message">Esta acción eliminará permanentemente el registro y no podrá ser recuperado.</p>
+            <div class="confirm-buttons">
+                <button class="btn-custom btn-outline-custom" id="btnCancelDelete">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button id="btnConfirmDelete" class="btn-custom btn-danger">
+                    <i class="fas fa-trash"></i> Sí, eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script>
+        // Datos de ejemplo con la estructura completa
+        let registros = [
+            {
+                id: 1,
+                fecha: '2025-05-14',
+                nombre: 'Fernando Jimenez Gomez',
+                cargo: 'Docente',
+                profesor: 'Gumercinda Perez',
+                proposito: 'Realizar actividad recreativa con los estudiantes del 5to grado para mejorar la convivencia.',
+                acuerdo: 'Comportamiento adecuado y seguimiento de las normas establecidas durante la actividad.',
+                estado: 'completado',
+                categoria: 'recreativa'
+            },
+            {
+                id: 2,
+                fecha: '2025-05-16',
+                nombre: 'María Rodríguez',
+                cargo: 'Coordinadora Académica',
+                profesor: 'Juan Pérez',
+                proposito: 'Supervisión de clase modelo para el departamento de ciencias aplicando nuevas metodologías.',
+                acuerdo: 'Entregar informe detallado sobre los aspectos metodológicos observados.',
+                estado: 'pendiente',
+                categoria: ''
+            },
+            {
+                id: 3,
+                fecha: '2025-05-12',
+                nombre: 'Roberto Sánchez',
+                cargo: 'Asesor Pedagógico',
+                profesor: 'Ana Martínez',
+                proposito: 'Asesoría sobre metodologías activas para la enseñanza de matemáticas en primaria.',
+                acuerdo: 'Implementar técnicas de aprendizaje basado en problemas en la próxima clase.',
+                estado: 'completado',
+                categoria: ''
+            }
+        ];
+
+        // Variables globales
+        let currentFilter = 'all';
+        let currentRegistroId = null;
+        let nextId = 4;
+
+        // Elementos DOM
+        const cardContainer = document.getElementById('cardContainer');
+        const emptyState = document.getElementById('emptyState');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const modalRegistro = document.getElementById('modalRegistro');
+        const detallesModal = document.getElementById('detallesModal');
+        const confirmDialog = document.getElementById('confirmDialog');
+        const toastContainer = document.getElementById('toastContainer');
+        const formRegistro = document.getElementById('formRegistro');
+
+        // Botones
+        const btnNuevoRegistro = document.getElementById('btnNuevoRegistro');
+        const btnEmptyAdd = document.getElementById('btnEmptyAdd');
+        const btnCloseModal = document.getElementById('btnCloseModal');
+        const btnCancelar = document.getElementById('btnCancelar');
+        const btnGuardar = document.getElementById('btnGuardar');
+        const btnCloseDetalles = document.getElementById('btnCloseDetalles');
+        const btnCerrarDetalles = document.getElementById('btnCerrarDetalles');
+        const btnEditarDetalles = document.getElementById('btnEditarDetalles');
+        const btnCancelDelete = document.getElementById('btnCancelDelete');
+        const btnConfirmDelete = document.getElementById('btnConfirmDelete');
+        const btnImprimir = document.getElementById('btnImprimir');
+        const btnExportar = document.getElementById('btnExportar');
+
+        // Funciones de ayuda
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+
+        function getInitials(name) {
+            return name.split(' ').map(n => n.charAt(0)).join('').substring(0, 2).toUpperCase();
+        }
+
+        function updateStatistics() {
+            const total = registros.length;
+            const completados = registros.filter(r => r.estado === 'completado').length;
+            const pendientes = registros.filter(r => r.estado === 'pendiente').length;
+            const recreativas = registros.filter(r => r.categoria === 'recreativa').length;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statCompletados').textContent = completados;
+            document.getElementById('statPendientes').textContent = pendientes;
+            document.getElementById('statRecreativas').textContent = recreativas;
+
+            document.getElementById('headerTotal').textContent = total;
+            document.getElementById('headerCompletados').textContent = completados;
+        }
+
+        // Generar HTML de tarjetas
+        function createCardHTML(registro) {
+            const fechaFormateada = formatDate(registro.fecha);
+            const iniciales = getInitials(registro.profesor);
+            
+            let dataCategory = registro.estado;
+            if (registro.categoria) {
+                dataCategory += ' ' + registro.categoria;
+            }
+            
+            return `
+                <div class="card" data-id="${registro.id}" data-category="${dataCategory}">
+                    <div class="dropdown-actions" id="dropdown${registro.id}">
+                        <button class="dropdown-toggle-custom">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <div class="dropdown-menu-custom">
+                            <div class="dropdown-item-custom edit-btn" data-id="${registro.id}">
+                                <i class="fas fa-edit"></i> Editar
+                            </div>
+                            <div class="dropdown-item-custom duplicate-btn" data-id="${registro.id}">
+                                <i class="fas fa-copy"></i> Duplicar
+                            </div>
+                            <div class="dropdown-item-custom delete-btn text-danger" data-id="${registro.id}">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-header">
+                        <span class="card-status ${registro.estado === 'completado' ? 'status-completado' : 'status-pendiente'}">
+                            <i class="fas ${registro.estado === 'completado' ? 'fa-check-circle' : 'fa-clock'}"></i>
+                            ${registro.estado === 'completado' ? 'Completado' : 'Pendiente'}
+                        </span>
+                        
+                        <h3>${registro.nombre}</h3>
+                        
+                        <div class="card-meta">
+                            <span class="card-meta-item">
+                                <i class="fas fa-calendar-alt"></i> ${fechaFormateada}
+                            </span>
+                            <span class="card-meta-item">
+                                <i class="fas fa-user-tie"></i> ${registro.cargo}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="card-section">
+                            <span class="card-label">Profesor acompañado:</span>
+                            <div class="card-section-profesor">
+                                <div class="avatar">${iniciales}</div>
+                                <div>${registro.profesor}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-section">
+                            <span class="card-label">Propósito:</span>
+                            <p>${registro.proposito}</p>
+                        </div>
+                        
+                        <div class="card-section">
+                            <span class="card-label">Acuerdos:</span>
+                            <p><i class="fas fa-quote-left" style="opacity: 0.3; margin-right: 5px;"></i> ${registro.acuerdo}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <button class="btn-sm btn-outline-primary ver-detalles-btn" data-id="${registro.id}">
+                            <i class="fas fa-eye"></i> Ver detalles
+                        </button>
+                        <button class="btn-sm btn-outline-secondary edit-btn" data-id="${registro.id}">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Renderizar tarjetas
+        function renderCards() {
+            let filteredRegistros = registros;
+            
+            if (currentFilter !== 'all') {
+                filteredRegistros = registros.filter(r => {
+                    const categories = `${r.estado} ${r.categoria || ''}`;
+                    return categories.includes(currentFilter);
+                });
+            }
+            
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            if (searchTerm) {
+                filteredRegistros = filteredRegistros.filter(r => 
+                    r.nombre.toLowerCase().includes(searchTerm) || 
+                    r.cargo.toLowerCase().includes(searchTerm) || 
+                    r.profesor.toLowerCase().includes(searchTerm) || 
+                    r.proposito.toLowerCase().includes(searchTerm) ||
+                    r.acuerdo.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (filteredRegistros.length === 0) {
+                cardContainer.innerHTML = '';
+                emptyState.style.display = 'block';
+            } else {
+                emptyState.style.display = 'none';
+                
+                let cardsHTML = '';
+                filteredRegistros.forEach(registro => {
+                    cardsHTML += createCardHTML(registro);
+                });
+                
+                cardContainer.innerHTML = cardsHTML;
+                setupCardEvents();
+            }
+
+            updateStatistics();
+        }
+
+        // Configurar eventos de las tarjetas
+        function setupCardEvents() {
+            // Botones de dropdown
+            document.querySelectorAll('.dropdown-toggle-custom').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const dropdown = btn.closest('.dropdown-actions');
+                    
+                    document.querySelectorAll('.dropdown-actions').forEach(d => {
+                        if (d !== dropdown) {
+                            d.classList.remove('show');
+                        }
+                    });
+                    
+                    dropdown.classList.toggle('show');
+                });
+            });
+            
+            // Botones de editar
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = parseInt(btn.dataset.id);
+                    openEditModal(id);
+                });
+            });
+            
+            // Botones de eliminar
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = parseInt(btn.dataset.id);
+                    showConfirmDialog(id);
+                });
+            });
+            
+            // Botones de ver detalles
+            document.querySelectorAll('.ver-detalles-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = parseInt(btn.dataset.id);
+                    showDetails(id);
+                });
+            });
+            
+            // Botones de duplicar
+            document.querySelectorAll('.duplicate-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = parseInt(btn.dataset.id);
+                    duplicateRegistro(id);
+                });
+            });
+        }
+
+        // Cerrar dropdowns al hacer clic fuera
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.dropdown-actions').forEach(dropdown => {
+                dropdown.classList.remove('show');
+            });
+        });
+
+        // Mostrar notificación toast
+        function showToast(title, message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast-notification toast-${type}`;
+            
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas ${type === 'success' ? 'fa-check' : type === 'error' ? 'fa-times' : 'fa-exclamation'}"></i>
+                </div>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Abrir modal de nuevo registro
+        function openNewModal() {
+            formRegistro.reset();
+            document.getElementById('registroId').value = '';
+            
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('fecha').value = today;
+            
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-clipboard-list"></i> Nuevo Registro de Acompañamiento';
+            
+            modalRegistro.style.display = 'flex';
+            currentRegistroId = null;
+        }
+
+        // Abrir modal de edición
+        function openEditModal(id) {
+            const registro = registros.find(r => r.id === id);
+            
+            if (registro) {
+                document.getElementById('registroId').value = registro.id;
+                document.getElementById('fecha').value = registro.fecha;
+                document.getElementById('nombre').value = registro.nombre;
+                document.getElementById('cargo').value = registro.cargo;
+                document.getElementById('profesor').value = registro.profesor;
+                document.getElementById('proposito').value = registro.proposito;
+                document.getElementById('acuerdo').value = registro.acuerdo;
+                document.getElementById('estado').value = registro.estado;
+                
+                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Editar Registro de Acompañamiento';
+                
+                modalRegistro.style.display = 'flex';
+                currentRegistroId = registro.id;
+            }
+        }
+
+        // Guardar registro
+        function saveRegistro() {
+            if (!formRegistro.checkValidity()) {
+                formRegistro.reportValidity();
+                return;
+            }
+            
+            const registroId = document.getElementById('registroId').value;
+            const fecha = document.getElementById('fecha').value;
+            const nombre = document.getElementById('nombre').value;
+            const cargo = document.getElementById('cargo').value;
+            const profesor = document.getElementById('profesor').value;
+            const proposito = document.getElementById('proposito').value;
+            const acuerdo = document.getElementById('acuerdo').value;
+            const estado = document.getElementById('estado').value;
+            
+            const esRecreativa = proposito.toLowerCase().includes('recreativa') ? 'recreativa' : '';
+            
+            const registro = {
+                id: registroId ? parseInt(registroId) : nextId++,
+                fecha,
+                nombre,
+                cargo,
+                profesor,
+                proposito,
+                acuerdo,
+                estado,
+                categoria: esRecreativa
+            };
+            
+            if (registroId) {
+                const index = registros.findIndex(r => r.id === parseInt(registroId));
+                if (index !== -1) {
+                    registros[index] = registro;
+                    showToast('¡Actualizado!', 'El registro ha sido actualizado correctamente.', 'success');
+                }
+            } else {
+                registros.push(registro);
+                showToast('¡Éxito!', 'El registro ha sido guardado correctamente.', 'success');
+            }
+            
+            modalRegistro.style.display = 'none';
+            renderCards();
+        }
+
+        // Mostrar detalles
+        function showDetails(id) {
+            const registro = registros.find(r => r.id === id);
+            
+            if (registro) {
+                const fechaFormateada = formatDate(registro.fecha);
+                
+                const html = `
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                            <span style="color: #777; font-size: 14px;">ID: ${registro.id}</span>
+                            <span class="card-status ${registro.estado === 'completado' ? 'status-completado' : 'status-pendiente'}" style="position: static;">
+                                <i class="fas ${registro.estado === 'completado' ? 'fa-check-circle' : 'fa-clock'}"></i>
+                                ${registro.estado === 'completado' ? 'Completado' : 'Pendiente'}
+                            </span>
+                        </div>
+                        
+                        <h3 style="margin-bottom: 10px; font-size: 20px;">${registro.nombre}</h3>
+                        
+                        <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                            <span class="card-meta-item">
+                                <i class="fas fa-calendar-alt"></i> ${fechaFormateada}
+                            </span>
+                            <span class="card-meta-item">
+                                <i class="fas fa-user-tie"></i> ${registro.cargo}
+                            </span>
+                        </div>
+                        
+                        <div style="background-color: var(--gray-light); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                            <div style="margin-bottom: 15px;">
+                                <div style="font-weight: 600; margin-bottom: 5px;">Profesor acompañado</div>
+                                <div style="font-size: 18px;">${registro.profesor}</div>
+                            </div>
+                            
+                            <div style="margin-bottom: 15px;">
+                                <div style="font-weight: 600; margin-bottom: 5px;">Propósito</div>
+                                <div>${registro.proposito}</div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 5px;">Acuerdos establecidos</div>
+                                <div style="background-color: white; padding: 10px; border-radius: 8px; border-left: 4px solid var(--primary-blue); font-style: italic;">
+                                    ${registro.acuerdo}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: right; color: #777; font-size: 14px;">
+                            Última actualización: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('detallesContent').innerHTML = html;
+                currentRegistroId = registro.id;
+                detallesModal.style.display = 'flex';
+            }
+        }
+
+        // Duplicar registro
+        function duplicateRegistro(id) {
+            const original = registros.find(r => r.id === id);
+            
+            if (original) {
+                const clone = {...original, id: nextId++};
+                registros.push(clone);
+                
+                showToast('¡Duplicado!', 'El registro ha sido duplicado correctamente.', 'success');
+                renderCards();
+            }
+        }
+
+        // Mostrar diálogo de confirmación para eliminar
+        function showConfirmDialog(id) {
+            currentRegistroId = id;
+            confirmDialog.style.display = 'flex';
+        }
+
+        // Eliminar registro
+        function deleteRegistro() {
+            const index = registros.findIndex(r => r.id === currentRegistroId);
+            
+            if (index !== -1) {
+                registros.splice(index, 1);
+                showToast('¡Eliminado!', 'El registro ha sido eliminado correctamente.', 'warning');
+                renderCards();
+            }
+            
+            confirmDialog.style.display = 'none';
+        }
+
+        // Eventos para filtros
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderCards();
+            });
+        });
+
+        // Eventos para búsqueda
+        searchInput.addEventListener('input', renderCards);
+
+        // Eventos para modal de registro
+        btnNuevoRegistro.addEventListener('click', openNewModal);
+        btnEmptyAdd.addEventListener('click', openNewModal);
+        
+        btnCloseModal.addEventListener('click', () => {
+            modalRegistro.style.display = 'none';
+        });
+        
+        btnCancelar.addEventListener('click', () => {
+            modalRegistro.style.display = 'none';
+        });
+        
+        btnGuardar.addEventListener('click', saveRegistro);
+        
+        // Eventos para modal de detalles
+        btnCloseDetalles.addEventListener('click', () => {
+            detallesModal.style.display = 'none';
+        });
+        
+        btnCerrarDetalles.addEventListener('click', () => {
+            detallesModal.style.display = 'none';
+        });
+        
+        btnEditarDetalles.addEventListener('click', () => {
+            detallesModal.style.display = 'none';
+            openEditModal(currentRegistroId);
+        });
+        
+        // Eventos para diálogo de confirmación
+        btnCancelDelete.addEventListener('click', () => {
+            confirmDialog.style.display = 'none';
+        });
+        
+        btnConfirmDelete.addEventListener('click', deleteRegistro);
+        
+        // Eventos para botones adicionales
+        btnImprimir.addEventListener('click', () => {
+            showToast('Preparando impresión...', 'Se está generando el documento para imprimir.', 'success');
+            setTimeout(() => {
+                window.print();
+            }, 500);
+        });
+        
+        btnExportar.addEventListener('click', () => {
+            showToast('Exportando...', 'Se está generando el archivo de exportación.', 'success');
+            
+            // Simulación de exportación
+            const csvContent = generateCSV();
+            downloadCSV(csvContent, 'Registros_Acompanamiento.csv');
+            
+            setTimeout(() => {
+                showToast('¡Exportado!', 'Archivo "Registros_Acompanamiento.csv" descargado correctamente.', 'success');
+            }, 1500);
+        });
+
+        // Función para generar CSV
+        function generateCSV() {
+            const headers = ['ID', 'Fecha', 'Nombre', 'Cargo', 'Profesor', 'Propósito', 'Acuerdo', 'Estado'];
+            const csvRows = [headers.join(',')];
+            
+            registros.forEach(registro => {
+                const row = [
+                    registro.id,
+                    registro.fecha,
+                    `"${registro.nombre}"`,
+                    `"${registro.cargo}"`,
+                    `"${registro.profesor}"`,
+                    `"${registro.proposito}"`,
+                    `"${registro.acuerdo}"`,
+                    registro.estado
+                ];
+                csvRows.push(row.join(','));
+            });
+            
+            return csvRows.join('\n');
+        }
+
+        // Función para descargar CSV
+        function downloadCSV(content, filename) {
+            const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+        
+        // Cerrar modales al hacer clic fuera
+        modalRegistro.addEventListener('click', (e) => {
+            if (e.target === modalRegistro) {
+                modalRegistro.style.display = 'none';
+            }
+        });
+        
+        detallesModal.addEventListener('click', (e) => {
+            if (e.target === detallesModal) {
+                detallesModal.style.display = 'none';
+            }
+        });
+        
+        confirmDialog.addEventListener('click', (e) => {
+            if (e.target === confirmDialog) {
+                confirmDialog.style.display = 'none';
+            }
+        });
+
+        // Funciones adicionales para mejorar la experiencia
+
+        // Autocompletado para profesores
+        const profesoresComunes = [
+            'Ana Martínez', 'Juan Pérez', 'María Rodríguez', 'Carlos López', 
+            'Gumercinda Perez', 'Luis García', 'Carmen Fernández', 'Roberto Silva'
+        ];
+
+        // Autocompletado para cargos
+        const cargosComunes = [
+            'Docente', 'Coordinadora Académica', 'Asesor Pedagógico', 'Director',
+            'Subdirector', 'Orientador', 'Psicólogo Educativo', 'Especialista'
+        ];
+
+        // Función para añadir sugerencias
+        function addAutocomplete(inputId, suggestions) {
+            const input = document.getElementById(inputId);
+            const datalistId = inputId + 'List';
+            
+            // Crear datalist si no existe
+            let datalist = document.getElementById(datalistId);
+            if (!datalist) {
+                datalist = document.createElement('datalist');
+                datalist.id = datalistId;
+                input.setAttribute('list', datalistId);
+                input.parentNode.appendChild(datalist);
+            }
+            
+            // Limpiar opciones existentes
+            datalist.innerHTML = '';
+            
+            // Añadir nuevas opciones
+            suggestions.forEach(suggestion => {
+                const option = document.createElement('option');
+                option.value = suggestion;
+                datalist.appendChild(option);
+            });
+        }
+
+        // Aplicar autocompletado
+        addAutocomplete('profesor', profesoresComunes);
+        addAutocomplete('cargo', cargosComunes);
+
+        // Validaciones en tiempo real
+        document.getElementById('fecha').addEventListener('change', function() {
+            const selectedDate = new Date(this.value);
+            const today = new Date();
+            
+            if (selectedDate > today) {
+                showToast('Fecha inválida', 'No puedes seleccionar una fecha futura.', 'warning');
+                this.value = today.toISOString().split('T')[0];
+            }
+        });
+
+        // Contador de caracteres para textareas
+        function addCharacterCounter(textareaId, maxLength = 500) {
+            const textarea = document.getElementById(textareaId);
+            const counter = document.createElement('div');
+            counter.style.cssText = 'text-align: right; font-size: 12px; color: #6c757d; margin-top: 5px;';
+            counter.id = textareaId + 'Counter';
+            
+            textarea.parentNode.appendChild(counter);
+            textarea.setAttribute('maxlength', maxLength);
+            
+            function updateCounter() {
+                const remaining = maxLength - textarea.value.length;
+                counter.textContent = `${textarea.value.length}/${maxLength} caracteres`;
+                counter.style.color = remaining < 50 ? '#f0ad4e' : '#6c757d';
+            }
+            
+            textarea.addEventListener('input', updateCounter);
+            updateCounter();
+        }
+
+        addCharacterCounter('proposito', 500);
+        addCharacterCounter('acuerdo', 500);
+
+        // Funciones de teclado para accesibilidad
+        document.addEventListener('keydown', function(e) {
+            // Escape para cerrar modales
+            if (e.key === 'Escape') {
+                if (modalRegistro.style.display === 'flex') {
+                    modalRegistro.style.display = 'none';
+                }
+                if (detallesModal.style.display === 'flex') {
+                    detallesModal.style.display = 'none';
+                }
+                if (confirmDialog.style.display === 'flex') {
+                    confirmDialog.style.display = 'none';
+                }
+            }
+            
+            // Ctrl+N para nuevo registro
+            if (e.ctrlKey && e.key === 'n') {
+                e.preventDefault();
+                openNewModal();
+            }
+            
+            // Ctrl+F para enfocar búsqueda
+            if (e.ctrlKey && e.key === 'f') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+
+        // Animaciones mejoradas para las tarjetas
+        function animateCard(card, delay = 0) {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.3s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, delay);
+        }
+
+        // Función mejorada de renderizado con animaciones
+        function renderCardsWithAnimation() {
+            renderCards();
+            
+            // Animar tarjetas después del renderizado
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                animateCard(card, index * 100);
+            });
+        }
+
+        // Búsqueda avanzada con resaltado
+        function highlightSearchTerm(text, searchTerm) {
+            if (!searchTerm) return text;
+            
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<mark style="background-color: #fff3cd; padding: 1px 2px; border-radius: 2px;">$1</mark>');
+        }
+
+        // Filtros avanzados
+        function addAdvancedFilters() {
+            const advancedFiltersHTML = `
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+                        <div>
+                            <label style="font-size: 12px; color: var(--text-muted); margin-bottom: 5px; display: block;">Fecha desde:</label>
+                            <input type="date" id="fechaDesde" style="padding: 6px 8px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px;">
+                        </div>
+                        <div>
+                            <label style="font-size: 12px; color: var(--text-muted); margin-bottom: 5px; display: block;">Fecha hasta:</label>
+                            <input type="date" id="fechaHasta" style="padding: 6px 8px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px;">
+                        </div>
+                        <div>
+                            <label style="font-size: 12px; color: var(--text-muted); margin-bottom: 5px; display: block;">Cargo:</label>
+                            <select id="filtroCargo" style="padding: 6px 8px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px;">
+                                <option value="">Todos los cargos</option>
+                                <option value="Docente">Docente</option>
+                                <option value="Coordinadora">Coordinadora</option>
+                                <option value="Asesor">Asesor</option>
+                            </select>
+                        </div>
+                        <button id="btnLimpiarFiltros" class="btn-sm btn-outline-secondary">
+                            <i class="fas fa-eraser"></i> Limpiar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.querySelector('.search-filters').insertAdjacentHTML('beforeend', advancedFiltersHTML);
+            
+            // Eventos para filtros avanzados
+            document.getElementById('fechaDesde').addEventListener('change', renderCards);
+            document.getElementById('fechaHasta').addEventListener('change', renderCards);
+            document.getElementById('filtroCargo').addEventListener('change', renderCards);
+            
+            document.getElementById('btnLimpiarFiltros').addEventListener('click', () => {
+                document.getElementById('fechaDesde').value = '';
+                document.getElementById('fechaHasta').value = '';
+                document.getElementById('filtroCargo').value = '';
+                searchInput.value = '';
+                currentFilter = 'all';
+                filterBtns.forEach(btn => btn.classList.remove('active'));
+                filterBtns[0].classList.add('active');
+                renderCards();
+                showToast('Filtros limpiados', 'Todos los filtros han sido eliminados.', 'success');
+            });
+        }
+
+        // Función de inicialización
+        function initializeApp() {
+            renderCards();
+            addAdvancedFilters();
+            updateStatistics();
+            
+            // Mensaje de bienvenida
+            setTimeout(() => {
+                showToast('¡Bienvenido!', 'Sistema de Registro de Acompañamiento cargado correctamente.', 'success');
+            }, 500);
+        }
+
+        // Inicializar la aplicación cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', initializeApp);
+
+        // Guardar datos en localStorage (opcional)
+        function saveToLocalStorage() {
+            localStorage.setItem('registrosAcompanamiento', JSON.stringify(registros));
+        }
+
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('registrosAcompanamiento');
+            if (saved) {
+                registros = JSON.parse(saved);
+                nextId = Math.max(...registros.map(r => r.id)) + 1;
+            }
+        }
+
+        // Cargar datos al iniciar
+        loadFromLocalStorage();
+
+        // Guardar datos cada vez que se modifique
+        const originalRenderCards = renderCards;
+        renderCards = function() {
+            originalRenderCards();
+            saveToLocalStorage();
+        };
+
+    </script>
+</body>
+</html>
